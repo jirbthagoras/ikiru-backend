@@ -13,12 +13,12 @@ export const logfile = pgTable("logfiles", (t) => ({
   createdAt: t.timestamp().defaultNow(),
 }));
 
-export const logFileRelations = relations(logfile, ({ one }) => ({
+export const logfileRelations = relations(logfile, ({ one }) => ({
   user: one(user, {
     fields: [logfile.userId],
     references: [user.id],
   }),
 }));
 
-export type LogFile = InferSelectModel<typeof logfile>;
-export type NewLogFile = InferInsertModel<typeof logfile>;
+export type Logfile = InferSelectModel<typeof logfile>;
+export type NewLogfile = InferInsertModel<typeof logfile>;
