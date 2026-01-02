@@ -3,9 +3,9 @@ import { pgTable } from "drizzle-orm/pg-core";
 
 export const tailSchema = pgTable("tails", (t) => ({
   id: t.integer().primaryKey().generatedAlwaysAsIdentity(),
-  user_id: t.integer().notNull(),
-  log_file_id: t.integer().notNull(),
-  created_at: t.timestamp().defaultNow(),
+  userId: t.integer().notNull(),
+  logfileId: t.integer().notNull(),
+  createdAt: t.timestamp().defaultNow(),
 }));
 
 export type Tail = InferSelectModel<typeof tailSchema>;

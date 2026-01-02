@@ -7,7 +7,7 @@ export const userSchema = pgTable("users", (t) => ({
   email: t.varchar().notNull(),
   password: t.varchar().notNull(),
   verified: t.boolean().default(false),
-  verified_at: t.timestamp(),
+  verifiedAt: t.timestamp(),
 }));
 
 export type User = InferSelectModel<typeof userSchema>;
