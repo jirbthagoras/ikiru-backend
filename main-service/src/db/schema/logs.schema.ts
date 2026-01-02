@@ -1,7 +1,7 @@
 import { InferInsertModel, InferSelectModel } from "drizzle-orm";
 import { pgTable } from "drizzle-orm/pg-core";
 
-export const logSchema = pgTable("logs", (t) => ({
+export const log = pgTable("logs", (t) => ({
   id: t.integer().primaryKey().generatedAlwaysAsIdentity(),
   logfileId: t.integer().notNull(),
   userId: t.integer().notNull(),
@@ -9,5 +9,5 @@ export const logSchema = pgTable("logs", (t) => ({
   createdAt: t.timestamp().defaultNow(),
 }));
 
-export type Log = InferSelectModel<typeof logSchema>;
-export type NewLog = InferInsertModel<typeof logSchema>;
+export type Log = InferSelectModel<typeof log>;
+export type NewLog = InferInsertModel<typeof log>;
