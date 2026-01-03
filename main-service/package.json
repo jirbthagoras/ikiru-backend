@@ -10,6 +10,7 @@
     "dotenv": "^17.2.3",
     "drizzle-orm": "^0.45.1",
     "elysia": "latest",
+    "ioredis": "^5.8.2",
     "pg": "^8.16.3"
   },
   "devDependencies": {
