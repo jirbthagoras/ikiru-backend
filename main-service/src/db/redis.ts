@@ -4,10 +4,8 @@ let redisClient: Redis;
 
 export const getRedisClient = (): Redis => {
   if (!redisClient) {
-    redisClient = new Redis({
-      port: 6379,
-      host: "127.0.0.1",
-    });
+    const redisUrl = process.env.REDIS_URL ?? "redis://localhost:6379";
+    redisClient = new Redis(redisUrl);
   }
 
   return redisClient;
