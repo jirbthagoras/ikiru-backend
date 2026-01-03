@@ -1,13 +1,24 @@
-import { InferInsertModel, InferSelectModel } from "drizzle-orm";
+import { InferInsertModel, InferSelectModel, relations } from "drizzle-orm";
 import { pgTable } from "drizzle-orm/pg-core";
+import { user } from "./user.schema";
 
-export const logFileSchema = pgTable("logfiles", (t) => ({
+export const logfile = pgTable("logfiles", (t) => ({
   id: t.integer().primaryKey().generatedAlwaysAsIdentity(),
-  user_id: t.integer().notNull(),
+  userId: t
+    .integer()
+    .notNull()
+    .references(() => user.id),
   name: t.varchar().notNull(),
   description: t.text().notNull(),
-  created_at: t.timestamp().defaultNow(),
+  createdAt: t.timestamp().defaultNow(),
 }));
 
-export type LogFile = InferSelectModel<typeof logFileSchema>;
-export type NewLogFile = InferInsertModel<typeof logFileSchema>;
+export const logfileRelations = relations(logfile, ({ one }) => ({
+  user: one(user, {
+    fields: [logfile.userId],
+    references: [user.id],
+  }),
+}));
+
+export type Logfile = InferSelectModel<typeof logfile>;
+export type NewLogfile = InferInsertModel<typeof logfile>;
