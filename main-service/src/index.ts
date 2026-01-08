@@ -1,3 +1,4 @@
+import cors from "@elysiajs/cors";
 import { Elysia } from "elysia";
 
-new Elysia().get("/", () => "Hello Elysia").listen(3000);
+new Elysia().use(cors()).listen(3000);
