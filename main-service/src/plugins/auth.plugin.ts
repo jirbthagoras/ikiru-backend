@@ -30,6 +30,6 @@ export const requireAuth = new Elysia()
   .use(authPlugin)
   .onBeforeHandle(({ user }) => {
     if (!user) {
-      return {};
+      throw new AuthorizationException("Unauthorized");
     }
   });
