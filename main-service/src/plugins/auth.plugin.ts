@@ -1,6 +1,10 @@
 import cookie from "@elysiajs/cookie";
 import jwt from "@elysiajs/jwt";
 import Elysia from "elysia";
+import {
+  AuthErrKind,
+  AuthorizationException,
+} from "../exceptions/authorization.exception";
 
 type AuthUser = {
   id: string;
@@ -17,19 +21,17 @@ export const authPlugin = new Elysia()
   .derive({ as: "global" }, async ({ jwt, cookie }) => {
     const raw = cookie.auth_token?.value;
 
-    if (!raw) return { user: null as AuthUser | null };
+    if (!raw)
+      throw new AuthorizationException(AuthErrKind.TOKEN_DOES_NOT_EXISTS);
 
-    if (typeof raw !== "string") return { user: null as AuthUser | null };
+    if (typeof raw !== "string")
+      throw new AuthorizationException(AuthErrKind.INVALID_TOKEN);
 
     const payload = await jwt.verify(raw);
 
-    return { user: payload as AuthUser };
-  });
-
-export const requireAuth = new Elysia()
-  .use(authPlugin)
-  .onBeforeHandle(({ user }) => {
-    if (!user) {
-      throw new AuthorizationException("Unauthorized");
+    if (!payload) {
+      throw new AuthorizationException(AuthErrKind.INVALID_TOKEN);
     }
+
+    return { user: payload as AuthUser };
   });

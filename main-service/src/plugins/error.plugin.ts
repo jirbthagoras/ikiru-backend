@@ -1,4 +1,5 @@
 import Elysia from "elysia";
+import { AuthorizationException } from "../exceptions/authorization.exception";
 
 export const errorPlugin = new Elysia()
   .error({
